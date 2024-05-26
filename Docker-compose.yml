@@ -1,0 +1,32 @@
+version: '3.1'
+
+services:
+  db:
+    container_name: komlavi-mysql
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - v_mysql:/var/lib/mysql
+    networks:
+      - student_apply_net
+
+  spring_app:
+    container_name: komlavi-appli
+    image: komlavi/demo
+    ports:
+      - "8088:8080"
+    networks:
+      - student_apply_net
+    depends_on:
+      - db
+volumes:
+   v_mysql:
+networks:
+  student_apply_net:
+    driver: bridge
+
+
